@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "aws-sdk": "^2.900.0",
     "react": "17.0.1",
     "react-native": "0.64.0"
   },
