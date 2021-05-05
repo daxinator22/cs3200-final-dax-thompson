@@ -5,10 +5,22 @@ export default() => {
   const [count, setCount] = useState(0);
   const [status, setStatus] = useState(0);
   const refresh = () => {
-    fetch('https://z2v1aoq2ib.execute-api.us-west-1.amazonaws.com/dev')
+    var postBody = {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body:{
+        user: 'daxinator22',
+        password: 'Xtreme!22'
+      },
+    };
+
+    fetch('https://z2v1aoq2ib.execute-api.us-west-1.amazonaws.com/dev', postBody)
       .then(response => {return response.json();})
       .then(json => {setStatus(json.statusCode);})
-      .catch(() => {setStatus(status + 1);})
+      .catch(() => {setStatus(status + 1);});
   }
 
   const incrementCount = () => {
@@ -18,6 +30,7 @@ export default() => {
   const decrementCount = () => {
     setCount(count - 1);
   }
+
   return (
       <View>
         <View style={styles.container}>
