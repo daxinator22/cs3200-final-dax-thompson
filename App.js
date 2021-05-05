@@ -10,6 +10,14 @@ export default() => {
       .then(json => {setStatus(json.statusCode);})
       .catch(() => {setStatus(status + 1);})
   }
+
+  const incrementCount = () => {
+    setCount(count + 1);
+  }
+
+  const decrementCount = () => {
+    setCount(count - 1);
+  }
   return (
       <View>
         <View style={styles.container}>
@@ -17,8 +25,8 @@ export default() => {
           <Text style={styles.status}>Status code: {status}</Text>
         </View>
         <Button color='red' title='Refresh' onPress={() => refresh()}/>
-        <Button title='Increment' onPress={() => setCount(count + 1)}/>
-        <Button title='Decrement' onPress={() => setCount(count - 1)}/>
+        <Button title='Increment' onPress={() => incrementCount()}/>
+        <Button title='Decrement' onPress={() => decrementCount()}/>
       </View>
     );
 }
