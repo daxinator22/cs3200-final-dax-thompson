@@ -4,42 +4,34 @@ import {View, Text, Button, StyleSheet} from 'react-native';
 export default() => {
   const [count, setCount] = useState(0);
   const [status, setStatus] = useState(0);
-  const refresh = () => {
-    var postBody = {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body:{
-        user: 'daxinator22',
-        password: 'Xtreme!22'
-      },
-    };
 
-    fetch('https://z2v1aoq2ib.execute-api.us-west-1.amazonaws.com/dev', postBody)
+  const updateCountInDatabase = (requestType) => {
+    fetch(`https://z2v1aoq2ib.execute-api.us-west-1.amazonaws.com/dev?requestType=${requestType}`)
       .then(response => {return response.json();})
-      .then(json => {setStatus(json.statusCode);})
-      .catch(() => {setStatus(status + 1);});
+      .then(json => {
+        setStatus(json.statusCode);
+        setCount(json.count)
+      })
+      .catch(() => {setStatus("Unable to connect");});
   }
 
   const incrementCount = () => {
-    setCount(count + 1);
+    updateCountInDatabase('increment');
   }
 
   const decrementCount = () => {
-    setCount(count - 1);
+    updateCountInDatabase('decrement');
   }
 
+  //getCountInDatabase();
   return (
       <View>
         <View style={styles.container}>
           <Text style={styles.text}>{count}</Text>
           <Text style={styles.status}>Status code: {status}</Text>
         </View>
-        <Button color='red' title='Refresh' onPress={() => refresh()}/>
-        <Button title='Increment' onPress={() => incrementCount()}/>
-        <Button title='Decrement' onPress={() => decrementCount()}/>
+        <Button color='red' title='Increment' onPress={() => incrementCount()}/>
+        <Button color='red' title='Decrement' onPress={() => decrementCount()}/>
       </View>
     );
 }
@@ -47,5 +39,5 @@ export default() => {
 const styles = StyleSheet.create({
     container: {alignItems: 'center'},
     text: {fontSize: 100, color: 'red'},
-    status: {fontSize: 25, color: 'white'},
+    status: {fontSize: 10, color: 'white'},
   });
